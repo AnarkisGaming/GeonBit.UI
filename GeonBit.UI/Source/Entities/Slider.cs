@@ -63,6 +63,9 @@ namespace GeonBit.UI.Entities
         /// <summary>Actual mark width in pixels (used internally).</summary>
         protected int _markWidth = 20;
 
+        /// <summary>Whether interacting with this control changes its value</summary>
+        public bool ChangeOnInteract = true;
+
         /// <summary>
         /// Create the slider.
         /// </summary>
@@ -224,25 +227,28 @@ namespace GeonBit.UI.Entities
         /// </summary>
         override protected void DoWhileMouseDown()
         {
-            // get mouse position and apply scroll value
-            var mousePos = GetMousePos();
-            mousePos += _lastScrollVal.ToVector2();
+            // get mouse position and apply scroll value, if ChangeOnInteract is true
+            if (ChangeOnInteract)
+            {
+                var mousePos = GetMousePos();
+                mousePos += _lastScrollVal.ToVector2();
 
-            // if mouse x is on the 0 side set to min
-            if (mousePos.X <= _destRect.X + _frameActualWidth)
-            {
-                Value = (int)Min;
-            }
-            // else if mouse x is on the max side, set to max
-            else if (mousePos.X >= _destRect.Right - _frameActualWidth)
-            {
-                Value = (int)Max;
-            }
-            // if in the middle calculate value based on mouse position
-            else
-            {
-                float val = ((mousePos.X - _destRect.X - _frameActualWidth + _markWidth / 2) / (_destRect.Width - _frameActualWidth * 2));
-                Value = (int)(Min + val * (Max - Min));
+                // if mouse x is on the 0 side set to min
+                if (mousePos.X <= _destRect.X + _frameActualWidth)
+                {
+                    Value = (int)Min;
+                }
+                // else if mouse x is on the max side, set to max
+                else if (mousePos.X >= _destRect.Right - _frameActualWidth)
+                {
+                    Value = (int)Max;
+                }
+                // if in the middle calculate value based on mouse position
+                else
+                {
+                    float val = ((mousePos.X - _destRect.X - _frameActualWidth + _markWidth / 2) / (_destRect.Width - _frameActualWidth * 2));
+                    Value = (int)(Min + val * (Max - Min));
+                }
             }
 
             // call base handler
