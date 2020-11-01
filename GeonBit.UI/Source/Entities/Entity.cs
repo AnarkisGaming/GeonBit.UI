@@ -397,6 +397,14 @@ namespace GeonBit.UI.Entities
         [System.Xml.Serialization.XmlIgnore]
         public EventCallback OnMouseWheelScroll = null;
 
+        /// <summary>Callback to execute when mouse wheel scrolls up and this entity is the active entity.</summary>
+        [System.Xml.Serialization.XmlIgnore]
+        public EventCallback OnMouseWheelScrollUp = null;
+
+        /// <summary>Callback to execute when mouse wheel scrolls down and this entity is the active entity.</summary>
+        [System.Xml.Serialization.XmlIgnore]
+        public EventCallback OnMouseWheelScrollDown = null;
+
         /// <summary>Called when entity starts getting dragged (only if draggable).</summary>
         [System.Xml.Serialization.XmlIgnore]
         public EventCallback OnStartDrag = null;
@@ -1916,6 +1924,8 @@ namespace GeonBit.UI.Entities
             OnMouseEnter += (Entity entity) => { other.OnMouseEnter?.Invoke(other); };
             OnMouseLeave += (Entity entity) => { other.OnMouseLeave?.Invoke(other); };
             OnMouseWheelScroll += (Entity entity) => { other.OnMouseWheelScroll?.Invoke(other); };
+            OnMouseWheelScrollUp += (Entity entity) => { other.OnMouseWheelScrollDown?.Invoke(other); };
+            OnMouseWheelScrollDown += (Entity entity) => { other.OnMouseWheelScrollDown?.Invoke(other); };
             OnStartDrag += (Entity entity) => { other.OnStartDrag?.Invoke(other); };
             OnStopDrag += (Entity entity) => { other.OnStopDrag?.Invoke(other); };
             WhileDragging += (Entity entity) => { other.WhileDragging?.Invoke(other); };
@@ -2109,6 +2119,11 @@ namespace GeonBit.UI.Entities
         {
             OnMouseWheelScroll?.Invoke(this);
             UserInterface.Active.OnMouseWheelScroll?.Invoke(this);
+
+            if (MouseInput.MouseWheelChange < 0)
+                OnMouseWheelScrollDown?.Invoke(this);
+            else if (MouseInput.MouseWheelChange > 0)
+                OnMouseWheelScrollUp?.Invoke(this);
         }
 
         /// <summary>
