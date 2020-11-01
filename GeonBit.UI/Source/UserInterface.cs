@@ -248,6 +248,9 @@ namespace GeonBit.UI
         /// <summary>Callback to execute when user clicks on an entity (eg release mouse over it).</summary>
         public EventCallback OnClick = null;
 
+        /// <summary>Callback to execute when user double clicks on an entity (clicked twice in a row within <see cref="UserInterface.DoubleClickTime"/> ms).</summary>
+        public EventCallback OnDoubleClick = null;
+
         /// <summary>Callback to execute when user clicks on an entity with right mouse button (eg release mouse over it).</summary>
         public EventCallback OnRightClick = null;
 
@@ -334,6 +337,11 @@ namespace GeonBit.UI
         /// The function used to generate tooltip text on entities.
         /// </summary>
         public GenerateTooltipFunc GenerateTooltipFunc = DefaultGenerateTooltipFunc;
+
+        /// <summary>
+        /// If an <see cref="Entity"/> is clicked twice within this many ms, it will be counted as a "double click."
+        /// </summary>
+        public uint DoubleClickTime = 300;
 
         /// <summary>
         /// Initialize UI manager (mostly load resources and set some defaults).

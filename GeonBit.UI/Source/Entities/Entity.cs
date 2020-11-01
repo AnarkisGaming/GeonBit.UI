@@ -258,6 +258,9 @@ namespace GeonBit.UI.Entities
         // entity current style properties
         private StyleSheet _style = new StyleSheet();
 
+        /// <summary>Holds when this was last clicked. Used for double-click events.</summary>
+        private System.DateTime _lastClick = default(System.DateTime);
+
         /// <summary>
         /// Get / set raw stylesheet.
         /// </summary>
@@ -376,6 +379,10 @@ namespace GeonBit.UI.Entities
         /// <summary>Callback to execute when user clicks on this entity (eg release mouse over it).</summary>
         [System.Xml.Serialization.XmlIgnore]
         public EventCallback OnClick = null;
+
+        /// <summary>Callback to execute when user double clicks on this entity (clicked twice in a row within <see cref="UserInterface.DoubleClickTime"/> ms).</summary>
+        [System.Xml.Serialization.XmlIgnore]
+        public EventCallback OnDoubleClick = null;
 
         /// <summary>Callback to execute when user clicks on this entity with right mouse button (eg release mouse over it).</summary>
         [System.Xml.Serialization.XmlIgnore]
@@ -1920,6 +1927,7 @@ namespace GeonBit.UI.Entities
             WhileMouseHoverOrDown += (Entity entity) => { other.WhileMouseHoverOrDown?.Invoke(other); };
             OnRightClick += (Entity entity) => { other.OnRightClick?.Invoke(other); };
             OnClick += (Entity entity) => { other.OnClick?.Invoke(other); };
+            OnDoubleClick += (Entity entity) => { other.OnDoubleClick?.Invoke(other); };
             OnValueChange += (Entity entity) => { other.OnValueChange?.Invoke(other); };
             OnMouseEnter += (Entity entity) => { other.OnMouseEnter?.Invoke(other); };
             OnMouseLeave += (Entity entity) => { other.OnMouseLeave?.Invoke(other); };
@@ -2007,8 +2015,18 @@ namespace GeonBit.UI.Entities
         /// </summary>
         virtual protected void DoOnClick()
         {
-            OnClick?.Invoke(this);
-            UserInterface.Active.OnClick?.Invoke(this);
+            if (_lastClick == default(System.DateTime) || (System.DateTime.Now - _lastClick).Milliseconds > UserInterface.Active.DoubleClickTime)
+            {
+                _lastClick = System.DateTime.Now;
+                OnClick?.Invoke(this);
+                UserInterface.Active.OnClick?.Invoke(this);
+            }
+            else
+            {
+                _lastClick = default(System.DateTime);
+                OnDoubleClick?.Invoke(this);
+                UserInterface.Active.OnDoubleClick?.Invoke(this);
+            }
         }
 
         /// <summary>
