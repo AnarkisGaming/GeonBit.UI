@@ -2090,6 +2090,7 @@ namespace GeonBit.UI.Entities
         /// </summary>
         virtual protected void DoOnMouseEnter()
         {
+            _lastClick = default(System.DateTime);
             OnMouseEnter?.Invoke(this);
             UserInterface.Active.OnMouseEnter?.Invoke(this);
         }
@@ -2099,6 +2100,7 @@ namespace GeonBit.UI.Entities
         /// </summary>
         virtual protected void DoOnMouseLeave()
         {
+            _lastClick = default(System.DateTime);
             OnMouseLeave?.Invoke(this);
             UserInterface.Active.OnMouseLeave?.Invoke(this);
         }
