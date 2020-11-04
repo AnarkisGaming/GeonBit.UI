@@ -1970,22 +1970,23 @@ namespace GeonBit.UI.Entities
             // get siblings and iterate them
             List<Entity> siblings = _parent._children;
             Entity prev = null;
-            foreach (Entity sibling in siblings)
+
+            for(int i=0; i<siblings.Count; i++)
             {
                 // when getting to self, break the loop
-                if (sibling == this)
+                if (siblings[i] == this)
                 {
                     break;
                 }
 
                 // if older sibling is invisible, skip it
-                if (skipInvisibles && !sibling.Visible)
+                if (skipInvisibles && !siblings[i].Visible)
                 {
                     continue;
                 }
 
                 // set prev
-                prev = sibling;
+                prev = siblings[i];
             }
 
             // return the previous entity (or null if wasn't found)
