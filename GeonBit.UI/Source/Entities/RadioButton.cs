@@ -106,10 +106,9 @@ namespace GeonBit.UI.Entities
                     }
 
                     // if entity is a radio button make sure its disabled
-                    if (entity is RadioButton)
+                    if (entity is RadioButton radio && radio.Checked)
                     {
-                        RadioButton radio = (RadioButton)entity;
-                        if (radio.Checked) { radio.Checked = false; }
+                        radio.Checked = false;
                     }
                 }
             }
