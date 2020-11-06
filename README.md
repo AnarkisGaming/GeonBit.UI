@@ -1,3 +1,11 @@
+# Anarkis Gaming's fork of GeonBit.UI
+
+This fork is intended to make public our patches to GeonBit.UI as implemented in our current title, [After the Collapse](https://s.team/a/727570). Patches were originally written almost entirely by [SerialKicked](https://github.com/SerialKicked) but cherry-picked and prepared by [Alexandra Frock](https://github.com/antigravities) for this repository. We thank the open source community for making After the Collapse possible.
+
+**Caveat emptor!** Please note that this project is in an incubating phase and it'd probably be a bad idea to incorporate it into a commercial application. Features may be undocumented and may be added, changed, or removed. We do intend to submit pull requests and patches upstream to the original repository as we test them for stability against the latest codebase (our private fork was pinned at [`10eaf5`](https://github.com/RonenNess/GeonBit.UI/commit/10eaf5906dfe6d41cafa0fd0f9c286b9b73088cf)), but we're not quite there yet.
+
+That being said, the original README is as follows:
+
 ![GeonBit.UI](assets/img/GeonBitUI-sm.png "GeonBit.UI")
 
 # GeonBit.UI
